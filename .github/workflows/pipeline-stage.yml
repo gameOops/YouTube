@@ -7,7 +7,7 @@ on:
       - stage
 jobs:
   deploy:
-    name: "Deplogdyffffddfgs"
+    name: "Deplogdyfffhfddfgs"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
