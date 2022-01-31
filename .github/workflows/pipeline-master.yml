@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_KEY_MASTER }}
+          ssh-private-key: ${{ secrets.key }}
       - name: Run remote SSH
         run: |
           echo "Branch is ${{ github.ref }}; Workflow is ${{ github.workflow }}"
