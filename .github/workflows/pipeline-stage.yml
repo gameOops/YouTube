@@ -1,0 +1,36 @@
+
+
+name: deploy_with_ssh_stage
+on: 
+  push:
+    branches:
+      - stage
+jobs:
+  deploy:
+    name: "Deploy"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: webfactory/ssh-agent@v0.5.3
+        with:
+            ssh-private-key: ${{ secrets.SSH_KEY_STAGE }}
+      - name: Run remote SSH
+        run: |
+          echo "Branch is ${{ github.ref }}; Workflow is ${{ github.workflow }}"
+          
+          SSH_OPTIONS="-o StrictHostKeyChecking=no"
+          SSH_TARGET="${SSH_USER}@${SSH_HOST}"
+          SCRIPT_DIR="${HOME}/.github/workflows"
+          ssh ${SSH_OPTIONS} ${SSH_TARGET} "bash -x ${SCRIPT_DIR}/pipeline-stage.sh ${{ github.ref }}" 
+          
+          if [ $? -ne 0 ]; then
+            echo "Error while running pipeline"
+            exit 255
+          fi
+          echo "Github Actions CI/CD pipeline completed"
+        env:
+          SSH_USER: ${{ secrets.SSH_USER_STAGE }}
+          SSH_HOST: ${{ secrets.SSH_HOST_STAGE }}
+          HOME: /home/adminka/liki.land-admin
+          BUILD: /home/adminka/liki.land-admin
+          
