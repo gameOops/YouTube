@@ -14,7 +14,7 @@
             </div>
             <div class="video_info_full">
               <div class="video_name">
-                <p>Хесус vs некоглай, Слив Папича, Сергей Шнуров, обращение с животными</p>
+                <p>Хесус2222 vs некоглай, Слив Папича, Сергей Шнуров, обращение с животными</p>
               </div>
               <div class="video_author_name">
                 MORGENSHTERN
