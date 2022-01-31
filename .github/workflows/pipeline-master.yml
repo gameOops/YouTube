@@ -1,33 +1,19 @@
-name: deploy_with_ssh_master
+name: Deploy
+
 on:
   push:
     branches:
       - master
+
 jobs:
   deploy:
-    name: "Deploy"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: webfactory/ssh-agent@v0.5.3
-        with:
-            ssh-private-key: ${{ secrets.key }}
-      - name: Run remote SSH
-        run: |
-          echo "Branch is ${{ github.ref }}; Workflow is ${{ github.workflow }}"
-
-          SSH_OPTIONS="-o StrictHostKeyChecking=no"
-          SSH_TARGET="${SSH_USER}@${SSH_HOST}"
-          SCRIPT_DIR="${HOME}/.github/workflows"
-          ssh ${SSH_OPTIONS} ${SSH_TARGET} "bash -x ${SCRIPT_DIR}/pipeline-master.sh ${{ github.ref }}"
-
-          if [ $? -ne 0 ]; then
-            echo "Error while running pipeline"
-            exit 255
-          fi
-          echo "Github Actions CI/CD pipeline completed"
-        env:
-          SSH_USER: ${{ secrets.user }}
-          SSH_HOST: ${{ secrets.host }}
-          HOME: /var/www/html/bloger
-          BUILD: /var/www/html/bloger
+      # Setup key
+      - run: set -eu
+      - run: mkdir "$HOME/.ssh"
+      - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
+      - run: chmod 600 "$HOME/.ssh/key"
+      # Deploy
+      - run: cd app && rsync -e "ssh -p 20022 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@87.249.44.235:/var/www/html/streaming
