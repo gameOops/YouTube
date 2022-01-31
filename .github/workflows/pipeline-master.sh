@@ -3,7 +3,7 @@
 HOME=/var/www/html/bloger
 BUILD=${BUILD:-/var/www/html/bloger}
 BRANCH="master"
-ENVTPL="/var/www/html/bloger/.env.txt"
+ENVTPL="/var/www/html/bloger/.env.example"
 ENVRUN="production"
 
 export GIT_MERGE_AUTOEDIT=no
