@@ -1,13 +1,13 @@
 
 
 name: deploy_with_ssh_stage
-on: 
+on:
   push:
     branches:
       - stage
 jobs:
   deploy:
-    name: "Deploy"
+    name: "Deployf"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,12 +17,12 @@ jobs:
       - name: Run remote SSH
         run: |
           echo "Branch is ${{ github.ref }}; Workflow is ${{ github.workflow }}"
-          
+
           SSH_OPTIONS="-o StrictHostKeyChecking=no"
           SSH_TARGET="${SSH_USER}@${SSH_HOST}"
           SCRIPT_DIR="${HOME}/.github/workflows"
-          ssh ${SSH_OPTIONS} ${SSH_TARGET} "bash -x ${SCRIPT_DIR}/pipeline-stage.sh ${{ github.ref }}" 
-          
+          ssh ${SSH_OPTIONS} ${SSH_TARGET} "bash -x ${SCRIPT_DIR}/pipeline-stage.sh ${{ github.ref }}"
+
           if [ $? -ne 0 ]; then
             echo "Error while running pipeline"
             exit 255
@@ -33,4 +33,3 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST_STAGE }}
           HOME: /home/adminka/liki.land-admin
           BUILD: /home/adminka/liki.land-admin
-          
