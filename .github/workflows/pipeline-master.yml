@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: webfactory/ssh-agent@v0.5.3
         with:
-            ssh-private-key: ${{ secrets.SSH_KEY_MASTER }}
+            ssh-private-key: ${{ secrets.key }}
       - name: Run remote SSH
         run: |
           echo "Branch is ${{ github.ref }}; Workflow is ${{ github.workflow }}"
@@ -27,7 +27,7 @@ jobs:
           fi
           echo "Github Actions CI/CD pipeline completed"
         env:
-          SSH_USER: ${{ secrets.SSH_USER_MASTER }}
-          SSH_HOST: ${{ secrets.SSH_HOST_MASTER }}
+          SSH_USER: ${{ secrets.user }}
+          SSH_HOST: ${{ secrets.host }}
           HOME: /var/www/html/bloger
           BUILD: /var/www/html/bloger
