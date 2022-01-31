@@ -6,7 +6,6 @@ Vue.use(VueRouter)
 import App from './views/App'
 import Hello from './views/Hello'
 import Home from './views/Home'
-import Сhannel from './views/Сhannel.vue'
 
 const router = new VueRouter({
     mode: 'history',
@@ -20,12 +19,7 @@ const router = new VueRouter({
             path: '/watch',
             name: 'watch',
             component: Hello,
-        },
-        {
-            path: '/channel',
-            name: 'channel',
-            component: Сhannel,
-        },
+        }
     ],
 });
 
